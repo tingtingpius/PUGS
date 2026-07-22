@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="title" content="PUGS: Physics-Guided Uncertainty Modeling for Dynamic 3D Gaussian Splatting in Underwater Scenes">
+  <meta name="description" content="Project page for PUGS: Physics-Guided Uncertainty Modeling for Dynamic 3D Gaussian Splatting in Underwater Scenes.">
+  <meta name="keywords" content="underwater 3d reconstruction, gaussian splatting, physics-guided uncertainty, dynamic scenes, neural rendering">
+  <meta name="author" content="Tingjun Li, Yuxi Wang, Guoqiang Zhong">
+  <meta name="robots" content="index, follow">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="PUGS: Physics-Guided Uncertainty Modeling for Dynamic 3D Gaussian Splatting in Underwater Scenes">
+  <meta property="og:description" content="Project page for PUGS: Physics-Guided Uncertainty Modeling for Dynamic 3D Gaussian Splatting in Underwater Scenes.">
+  <meta property="og:image" content="assets/images/teaser.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="PUGS: Physics-Guided Uncertainty Modeling for Dynamic 3D Gaussian Splatting in Underwater Scenes">
+  <meta name="twitter:description" content="Project page for PUGS: Physics-Guided Uncertainty Modeling for Dynamic 3D Gaussian Splatting in Underwater Scenes.">
+  <meta name="twitter:image" content="assets/images/teaser.png">
+
+  <meta name="citation_title" content="PUGS: Physics-Guided Uncertainty Modeling for Dynamic 3D Gaussian Splatting in Underwater Scenes">
+  <meta name="citation_author" content="Li, Tingjun">
+  <meta name="citation_author" content="Wang, Yuxi">
+  <meta name="citation_author" content="Zhong, Guoqiang">
+  <meta name="citation_publication_date" content="2026">
+
+  <meta name="theme-color" content="#0a0f1e">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+  <title>PUGS: Physics-Guided Uncertainty Modeling for Dynamic 3D Gaussian Splatting in Underwater Scenes</title>
+
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+          },
+          colors: {
+            deep: {
+              50: '#e8eaf0',
+              100: '#c2c7d6',
+              200: '#9ba3bc',
+              300: '#7480a2',
+              400: '#4e5d88',
+              500: '#283a6e',
+              600: '#1e2e5c',
+              700: '#152349',
+              800: '#0d1737',
+              900: '#0a0f1e',
+              950: '#060912',
+            },
+            aqua: {
+              50: '#e0f7ff',
+              100: '#b3ecff',
+              200: '#80e0ff',
+              300: '#4dd4ff',
+              400: '#26c8ff',
+              500: '#00b8f0',
+              600: '#0098cc',
+              700: '#007ba8',
+              800: '#006085',
+              900: '#004762',
+            },
+            accent: {
+              light: '#64ffda',
+              DEFAULT: '#00bfa5',
+              dark: '#008e76',
+            }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'float-delayed': 'float 6s ease-in-out 2s infinite',
+            'float-slow': 'float 8s ease-in-out 1s infinite',
+            'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+            'fade-in': 'fadeIn 0.6s ease-out forwards',
+            'fade-up': 'fadeUp 0.8s ease-out forwards',
+            'slide-in-right': 'slideInRight 0.5s ease-out forwards',
+            'shimmer': 'shimmer 2s linear infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { boxShadow: '0 0 5px rgba(0, 191, 165, 0.3)' },
+              '50%': { boxShadow: '0 0 20px rgba(0, 191, 165, 0.6)' },
+            },
+            fadeIn: {
+              from: { opacity: '0' },
+              to: { opacity: '1' },
+            },
+            fadeUp: {
+              from: { opacity: '0', transform: 'translateY(30px)' },
+              to: { opacity: '1', transform: 'translateY(0)' },
+            },
+            slideInRight: {
+              from: { opacity: '0', transform: 'translateX(20px)' },
+              to: { opacity: '1', transform: 'translateX(0)' },
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '-200% 0' },
+              '100%': { backgroundPosition: '200% 0' },
+            },
+          },
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Academicons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-deep-950 text-white font-sans overflow-x-hidden">
+
+  <!-- ==================== Theme Toggle ==================== -->
+  <button id="theme-toggle" class="fixed top-6 right-6 z-50 w-11 h-11 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center text-lg hover:bg-white/20 transition-all duration-300 hover:scale-110" aria-label="Toggle theme">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <!-- ==================== Navigation ==================== -->
+  <nav id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-all duration-500 py-4">
+    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between">
+      <a href="#" class="text-lg font-bold tracking-tight opacity-0 transition-opacity duration-500" id="nav-logo">🌊 PUGS</a>
+      <div class="hidden md:flex items-center gap-1" id="nav-links">
+        <a href="#overview" class="nav-link px-3 py-2 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all">Overview</a>
+        <a href="#abstract" class="nav-link px-3 py-2 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all">Abstract</a>
+        <a href="#pipeline" class="nav-link px-3 py-2 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all">Pipeline</a>
+        <a href="#results" class="nav-link px-3 py-2 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all">Results</a>
+        <a href="#bibtex" class="nav-link px-3 py-2 text-sm font-medium rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition-all">BibTeX</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== Hero Section ==================== -->
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Three.js Canvas Background -->
+    <canvas id="hero-canvas" class="absolute inset-0 z-0"></canvas>
+
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 z-10 bg-gradient-to-b from-deep-950/40 via-deep-950/60 to-deep-950"></div>
+
+    <!-- Floating Orbs -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-aqua-500/10 rounded-full blur-3xl animate-float pointer-events-none z-10"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-float-delayed pointer-events-none z-10"></div>
+
+    <!-- Content -->
+    <div class="relative z-20 max-w-4xl mx-auto px-6 text-center pt-20">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 text-accent-light text-sm font-medium mb-8 animate-fade-in">
+        <span class="w-2 h-2 bg-accent-light rounded-full animate-pulse"></span>
+        TPAMI
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-black leading-tight mb-6 animate-fade-in bg-gradient-to-br from-white via-white to-gray-400 bg-clip-text text-transparent">
+        PUGS: Physics-Guided Uncertainty Modeling for Dynamic 3D Gaussian Splatting in Underwater Scenes
+      </h1>
+
+      <!-- Authors -->
+      <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-lg md:text-xl text-gray-400 mb-4 animate-fade-in" style="animation-delay: 0.15s">
+        <span class="author-name">Tingjun Li</span>
+        <span class="text-gray-600">·</span>
+        <span class="author-name">Yuxi Wang<sup class="text-accent-light text-xs ml-0.5">*</sup></span>
+        <span class="text-gray-600">·</span>
+        <span class="author-name">Guoqiang Zhong<sup class="text-accent-light text-xs ml-0.5">*</sup></span>
+
+
+      </div>
+      <p class="text-sm text-gray-500 mb-8 animate-fade-in" style="animation-delay: 0.2s">
+        <sup>*</sup> Corresponding Author
+      </p>
+
+      <!-- Affiliation -->
+      <p class="text-gray-500 mb-10 animate-fade-in" style="animation-delay: 0.25s">
+        Ocean University of China
+      </p>
+
+      <!-- Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-4 animate-fade-up" style="animation-delay: 0.3s">
+        <a href="#" class="glass-btn group">
+          <i class="fas fa-file-pdf mr-2 group-hover:scale-110 transition-transform"></i>
+          <span>Paper</span>
+        </a>
+        <a href="#" class="glass-btn group">
+          <i class="fab fa-github mr-2 group-hover:scale-110 transition-transform"></i>
+          <span>Code</span>
+        </a>
+        <a href="#" class="glass-btn group">
+          <i class="ai ai-arxiv mr-2 group-hover:scale-110 transition-transform"></i>
+          <span>arXiv</span>
+        </a>
+        <a href="#" class="glass-btn group">
+          <i class="fas fa-play mr-2 group-hover:scale-110 transition-transform"></i>
+          <span>Video</span>
+        </a>
+        <a href="#" class="glass-btn group">
+          <i class="fas fa-database mr-2 group-hover:scale-110 transition-transform"></i>
+          <span>Dataset</span>
+        </a>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 animate-bounce">
+        <span class="text-xs tracking-widest uppercase">Scroll</span>
+        <i class="fas fa-chevron-down text-sm"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Overview Section ==================== -->
+  <section id="overview" class="py-24 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="section-header reveal">
+        <h2 class="section-title">Overview</h2>
+        <p class="section-subtitle">Physics-guided uncertainty modeling for dynamic underwater 3D reconstruction</p>
+      </div>
+      <div class="reveal">
+        <div class="glass-card p-2 overflow-hidden">
+          <img src="assets/images/teaser.png" alt="Overview" class="w-full rounded-xl" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" loading="eager">
+          <div class="hidden w-full aspect-video bg-deep-800 rounded-xl flex items-center justify-center text-gray-500 text-lg">
+            <i class="fas fa-image mr-2"></i> Teaser image — replace assets/images/teaser.png
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Video Section ==================== -->
+  <section id="video" class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="section-header reveal">
+        <h2 class="section-title">Demo Videos</h2>
+        <p class="section-subtitle">Qualitative results on dynamic underwater scenes</p>
+      </div>
+      <div class="reveal">
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Demo 1 -->
+          <div class="glass-card p-2 overflow-hidden">
+            <video class="w-full rounded-xl" autoplay muted loop playsinline preload="auto">
+              <source src="assets/videos/demo1.mp4" type="video/mp4">
+            </video>
+            <p class="text-center text-gray-400 text-sm mt-3 mb-1">Demo 1: Dynamic underwater scene reconstruction</p>
+          </div>
+          <!-- Demo 2 -->
+          <div class="glass-card p-2 overflow-hidden">
+            <video class="w-full rounded-xl" autoplay muted loop playsinline preload="auto">
+              <source src="assets/videos/demo2.mp4" type="video/mp4">
+            </video>
+            <p class="text-center text-gray-400 text-sm mt-3 mb-1">Demo 2: Novel view synthesis with uncertainty modeling</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Abstract Section ==================== -->
+  <section id="abstract" class="py-24 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="section-header reveal">
+        <h2 class="section-title">Abstract</h2>
+        <p class="section-subtitle">Summary of our research</p>
+      </div>
+      <div class="reveal">
+        <div class="glass-card p-8 md:p-10">
+          <div class="prose-custom">
+            <p class="text-lg leading-relaxed text-gray-300">
+             Dynamic 3D Gaussian Splatting (3DGS) has recently emerged as an efficient paradigm for reconstructing dynamic scenes.
+Existing approaches predominantly model scene dynamics through deterministic deformation fields, implicitly assuming that each Gaussian follows a unique geometric trajectory over time.
+However, this assumption fundamentally breaks down in underwater scenes, where light scattering, refraction, marine snow, and severe visibility degradation introduce substantial physical ambiguity into the imaging process.
+In this paper, we present a physics-guided uncertainty model for underwater dynamic 3D Gaussian Splatting that learns to detect the inherent uncertainty induced by underwater image formation and exploits it as a physical signal to guide dynamic scene representation.
+Instead of estimating a single deterministic displacement, PUGS parameterizes each Gaussian's motion as a probability distribution characterized by both its expected deformation and physical uncertainty. 
+This probabilistic formulation enables the model to distinguish stable structural evolution from stochastic optical perturbations caused by underwater media.
+Based on this representation, we introduce a stochastic deformation optimization strategy that samples Gaussian trajectories through local reparameterization, encouraging adaptive exploration of multiple physically plausible solutions during training. To progressively consolidate the learned geometry, we further propose an uncertainty annealing framework together with a dual-path self-consistency distillation objective, which gradually transforms stochastic exploration into deterministic reconstruction while preserving temporal coherence. 
+Furthermore, the learned uncertainty naturally serves as a physical reliability indicator: it guides adaptive Gaussian densification, concentrating model capacity on regions where scattering and optical degradation most severely degrade visual information.
+Extensive experiments on challenging underwater dynamic datasets and physics-aware benchmark demonstrate that the proposed method consistently outperforms state-of-the-art methods in rendering quality, temporal consistency, and reconstruction robustness under complex conditions.
+            </p>
+          </div>
+          <!-- Abstract Decorative Element -->
+          <div class="mt-8 pt-6 border-t border-white/5 flex items-center gap-3">
+            <div class="flex -space-x-2">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-aqua-400 to-aqua-600 border-2 border-deep-900"></div>
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-accent-light to-accent border-2 border-deep-900"></div>
+              <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-600 border-2 border-deep-900"></div>
+            </div>
+            <span class="text-sm text-gray-500">Keywords: 3D Gaussian Splatting, Physics-Guided Uncertainty, Underwater Reconstruction, Dynamic Scenes, Neural Rendering</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Pipeline Section ==================== -->
+  <section id="pipeline" class="py-24 px-6 bg-deep-950/50">
+    <div class="max-w-5xl mx-auto">
+      <div class="section-header reveal">
+        <h2 class="section-title">Pipeline</h2>
+        <p class="section-subtitle">An overview of our method's architecture</p>
+      </div>
+      <div class="reveal">
+        <div class="glass-card p-2 overflow-hidden">
+          <img src="assets/images/pipeline.png" alt="Pipeline" class="w-full rounded-xl" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" loading="lazy">
+          <div class="hidden w-full aspect-[2/1] bg-deep-800 rounded-xl flex items-center justify-center text-gray-500 text-lg">
+            <i class="fas fa-diagram-project mr-2"></i> Pipeline figure — replace assets/images/pipeline.png
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Key Features ==================== -->
+  <section class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="section-header reveal">
+        <h2 class="section-title">Key Contributions</h2>
+        <p class="section-subtitle">What sets our method apart</p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6 mt-12">
+        <div class="reveal glass-card p-8 hover-lift group">
+          <div class="w-14 h-14 rounded-2xl bg-accent/10 border border-accent/20 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-all">
+            <i class="fas fa-water text-2xl text-accent-light"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Dynamic Field Modeling</h3>
+          <p class="text-gray-400 leading-relaxed">Unified representation of underwater structure and view-dependent medium over time with 4D neural voxels.</p>
+        </div>
+        <div class="reveal glass-card p-8 hover-lift group" style="transition-delay: 0.1s">
+          <div class="w-14 h-14 rounded-2xl bg-aqua-500/10 border border-aqua-500/20 flex items-center justify-center mb-6 group-hover:bg-aqua-500/20 transition-all">
+            <i class="fas fa-dice-d6 text-2xl text-aqua-400"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">3D Gaussian Splatting</h3>
+          <p class="text-gray-400 leading-relaxed">Canonical representation initialized with 3D Gaussians embedded in a volumetric medium field for high-quality rendering.</p>
+        </div>
+        <div class="reveal glass-card p-8 hover-lift group" style="transition-delay: 0.2s">
+          <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-6 group-hover:bg-purple-500/20 transition-all">
+            <i class="fas fa-brain text-2xl text-purple-400"></i>
+          </div>
+          <h3 class="text-xl font-bold mb-3">Uncertainty-Aware Loss</h3>
+          <p class="text-gray-400 leading-relaxed">Physics-tied heteroscedastic uncertainty suppresses noise from low-confidence observations during training.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Results Section ==================== -->
+  <section id="results" class="py-24 px-6 bg-deep-950/50">
+    <div class="max-w-7xl mx-auto">
+      <div class="section-header reveal">
+        <h2 class="section-title">Qualitative Results</h2>
+        <p class="section-subtitle">Per-scene comparisons with state-of-the-art methods on underwater dynamic scenes</p>
+      </div>
+
+      <!-- Summary Figure -->
+      <div class="reveal mb-12">
+        <div class="glass-card p-2 overflow-hidden">
+          <img src="assets/images/comparisons/exp.png" alt="Experimental results overview" class="w-full rounded-xl cursor-pointer" onclick="openLightbox('assets/images/comparisons/exp.png', 'Experimental Results Overview')" loading="lazy">
+          <p class="text-center text-gray-400 text-sm mt-3 mb-2">Overview of qualitative comparisons across all underwater scenes</p>
+        </div>
+      </div>
+
+      <!-- Scene Selector Tabs -->
+      <div class="reveal mb-8">
+        <div class="flex flex-wrap justify-center gap-2" id="scene-tabs">
+          <button class="scene-tab active" data-scene="snake">Snake</button>
+          <button class="scene-tab" data-scene="puffer">Puffer</button>
+          <button class="scene-tab" data-scene="coral">Coral</button>
+          <button class="scene-tab" data-scene="cave">Cave</button>
+          <button class="scene-tab" data-scene="boat">Boat</button>
+          <button class="scene-tab" data-scene="anemone">Anemone</button>
+          <button class="scene-tab" data-scene="streak">Streak</button>
+          <button class="scene-tab" data-scene="strait">Strait</button>
+        </div>
+      </div>
+
+      <!-- Comparison Grid (populated by JS) -->
+      <div class="reveal">
+        <div class="glass-card p-4 md:p-6">
+          <!-- Method Legend -->
+          <div class="grid grid-cols-4 md:grid-cols-8 gap-2 mb-6 pb-4 border-b border-white/5 text-center" id="method-legend">
+            <span class="text-xs font-medium px-2 py-1 rounded bg-accent/20 text-accent-light">Ours (PUGS)</span>
+            <span class="text-xs font-medium px-2 py-1 rounded bg-white/5 text-gray-400">Deformable</span>
+            <span class="text-xs font-medium px-2 py-1 rounded bg-white/5 text-gray-400">3DGS</span>
+            <span class="text-xs font-medium px-2 py-1 rounded bg-white/5 text-gray-400">GSPL</span>
+            <span class="text-xs font-medium px-2 py-1 rounded bg-white/5 text-gray-400">Sea</span>
+            <span class="text-xs font-medium px-2 py-1 rounded bg-white/5 text-gray-400">SPF</span>
+            <span class="text-xs font-medium px-2 py-1 rounded bg-white/5 text-gray-400">NeRF</span>
+            <span class="text-xs font-medium px-2 py-1 rounded bg-green-500/10 text-green-400">GT</span>
+          </div>
+
+          <!-- Dynamic image grid -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="comparison-grid">
+            <!-- Populated by JavaScript -->
+          </div>
+
+          <!-- Scene label -->
+          <p class="text-center text-gray-400 text-sm mt-4" id="scene-label">Scene: Snake — click any image to enlarge</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Lightbox Modal ==================== -->
+  <div id="lightbox" class="fixed inset-0 z-50 bg-deep-950/98 backdrop-blur-xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-400" onclick="closeLightbox()">
+    <button class="absolute top-6 right-6 text-white/60 hover:text-white text-2xl z-10 transition-colors" onclick="closeLightbox()" aria-label="Close">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="relative max-w-[95vw] max-h-[95vh]" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[90vh] rounded-xl object-contain shadow-2xl">
+      <p id="lightbox-caption" class="text-center text-gray-400 text-sm mt-3"></p>
+    </div>
+    <!-- Prev/Next -->
+    <button class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition-all z-10" onclick="event.stopPropagation(); lightboxNav(-1)" aria-label="Previous">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white text-xl transition-all z-10" onclick="event.stopPropagation(); lightboxNav(1)" aria-label="Next">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+
+  <!-- ==================== BibTeX Section ==================== -->
+  <section id="bibtex" class="py-24 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="section-header reveal">
+        <h2 class="section-title">BibTeX</h2>
+        <p class="section-subtitle">Cite our work</p>
+      </div>
+      <div class="reveal">
+        <div class="glass-card p-6 relative group">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-sm text-gray-500 font-mono">bibliography.bib</span>
+            <button onclick="copyBibTeX()" id="copy-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium transition-all active:scale-95">
+              <i class="fas fa-copy"></i>
+              <span id="copy-text">Copy</span>
+            </button>
+          </div>
+          <pre id="bibtex-code" class="bg-deep-900/80 rounded-xl p-6 overflow-x-auto text-sm font-mono leading-relaxed text-gray-300 border border-white/5"><code>@inproceedings{li2026pugs,
+  title     = {PUGS: Physics-Guided Uncertainty Modeling for Dynamic 3D Gaussian Splatting in Underwater Scenes},
+  author    = {Tingjun Li and Yuxi Wang and Guoqiang Zhong},
+  booktitle = {IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)},
+  year      = {2026}
+}</code></pre>
+        </div>
+        <!-- Copy Toast -->
+        <div id="copy-toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 px-6 py-3 rounded-full bg-accent text-deep-900 font-medium text-sm shadow-lg shadow-accent/25 opacity-0 translate-y-4 pointer-events-none transition-all duration-300 z-50">
+          <i class="fas fa-check mr-2"></i> Copied to clipboard!
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== Footer ==================== -->
+  <footer class="py-12 px-6 border-t border-white/5">
+    <div class="max-w-4xl mx-auto text-center">
+      <p class="text-gray-600 text-sm leading-relaxed">
+        Built with ❤️ using
+        <a href="https://tailwindcss.com" target="_blank" class="text-gray-500 hover:text-accent-light transition-colors">Tailwind CSS</a>
+        and
+        <a href="https://threejs.org" target="_blank" class="text-gray-500 hover:text-accent-light transition-colors">Three.js</a>.
+        <br class="hidden md:block">
+        Licensed under
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" class="text-gray-500 hover:text-accent-light transition-colors">CC BY-SA 4.0</a>.
+      </p>
+    </div>
+  </footer>
+
+  <!-- ==================== Scripts ==================== -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
+
+  <script type="module" src="assets/js/three-bg.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/components.js"></script>
+</body>
+</html>
