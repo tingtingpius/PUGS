@@ -1,0 +1,531 @@
+/* ============================================================
+   Academic Project Page — Custom Styles
+   Features: Glassmorphism, Dark/Light themes, Animations, Responsive
+   ============================================================ */
+
+/* ==================== CSS Variables / Themes ==================== */
+:root {
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-hover-bg: rgba(255, 255, 255, 0.06);
+}
+
+/* Light theme overrides */
+[data-theme="light"] {
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --glass-hover-bg: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="light"] body {
+  background: #f5f7fa;
+  color: #1a1a2e;
+}
+
+[data-theme="light"] .glass-card {
+  background: var(--glass-bg);
+  border-color: var(--glass-border);
+}
+
+[data-theme="light"] .section-title {
+  color: #1a1a2e;
+}
+
+[data-theme="light"] .section-subtitle {
+  color: #6b7280;
+}
+
+[data-theme="light"] .glass-btn {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #1a1a2e;
+}
+
+[data-theme="light"] .glass-btn:hover {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] #navbar.scrolled {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .nav-link {
+  color: #6b7280;
+}
+
+[data-theme="light"] .nav-link:hover,
+[data-theme="light"] .nav-link.active {
+  color: #1a1a2e;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .prose-custom p {
+  color: #4b5563;
+}
+
+[data-theme="light"] #bibtex-code {
+  background: #f0f1f5;
+  border-color: rgba(0, 0, 0, 0.06);
+  color: #374151;
+}
+
+[data-theme="light"] .carousel-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #374151;
+}
+
+[data-theme="light"] .carousel-dot {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .carousel-dot.active {
+  background: #1a1a2e;
+}
+
+[data-theme="light"] #copy-btn {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #374151;
+}
+
+[data-theme="light"] #copy-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] footer {
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+/* ==================== Base Styles ==================== */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  transition: background-color var(--transition-smooth), color var(--transition-smooth);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Selection */
+::selection {
+  background: rgba(0, 191, 165, 0.3);
+  color: #fff;
+}
+
+/* ==================== Glassmorphism Cards ==================== */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+  transition: all var(--transition-base);
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme="light"] .glass-card:hover {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+/* ==================== Glass Buttons ==================== */
+.glass-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.75rem;
+  color: #e5e7eb;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all var(--transition-base);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+.glass-btn:active {
+  transform: translateY(0);
+}
+
+/* ==================== Navigation ==================== */
+#navbar {
+  background: transparent;
+  border-bottom: 1px solid transparent;
+}
+
+#navbar.scrolled {
+  background: rgba(10, 15, 30, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+#navbar.scrolled #nav-logo {
+  opacity: 1;
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 60%;
+  height: 2px;
+  background: #00bfa5;
+  border-radius: 1px;
+  transition: transform var(--transition-base);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+.nav-link.active {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ==================== Section Headers ==================== */
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* ==================== Scroll Reveal Animation ==================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==================== Hover Lift ==================== */
+.hover-lift {
+  transition: all var(--transition-base);
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ==================== Scene Tabs ==================== */
+.scene-tab {
+  padding: 0.5rem 1.25rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #9ca3af;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-transform: capitalize;
+}
+
+.scene-tab:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e5e7eb;
+}
+
+.scene-tab.active {
+  background: rgba(0, 191, 165, 0.15);
+  border-color: rgba(0, 191, 165, 0.4);
+  color: #64ffda;
+  box-shadow: 0 0 12px rgba(0, 191, 165, 0.15);
+}
+
+[data-theme="light"] .scene-tab {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #6b7280;
+}
+
+[data-theme="light"] .scene-tab:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #374151;
+}
+
+[data-theme="light"] .scene-tab.active {
+  background: rgba(0, 191, 165, 0.12);
+  border-color: rgba(0, 191, 165, 0.5);
+  color: #008e76;
+}
+
+/* ==================== Comparison Grid ==================== */
+.comparison-thumb {
+  position: relative;
+  aspect-ratio: 4/3;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  border: 2px solid transparent;
+  background: #0d1737;
+}
+
+.comparison-thumb:hover {
+  transform: scale(1.03);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.comparison-thumb.ours {
+  border-color: rgba(0, 191, 165, 0.5);
+  box-shadow: 0 0 16px rgba(0, 191, 165, 0.15);
+}
+
+.comparison-thumb.ours:hover {
+  border-color: rgba(100, 255, 218, 0.7);
+  box-shadow: 0 0 24px rgba(0, 191, 165, 0.3);
+}
+
+.comparison-thumb.gt {
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.comparison-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.comparison-thumb .method-badge {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  right: 4px;
+  text-align: center;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #9ca3af;
+  letter-spacing: 0.02em;
+}
+
+.comparison-thumb.ours .method-badge {
+  background: rgba(0, 191, 165, 0.8);
+  color: #fff;
+}
+
+.comparison-thumb.gt .method-badge {
+  background: rgba(34, 197, 94, 0.7);
+  color: #fff;
+}
+
+/* ==================== Lightbox ==================== */
+#lightbox.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ==================== Carousel ==================== */
+.carousel-container {
+  position: relative;
+}
+
+.carousel-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  font-size: 0.9rem;
+}
+
+.carousel-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  transform: scale(1.1);
+}
+
+.carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+
+.carousel-dot.active {
+  background: #00bfa5;
+  box-shadow: 0 0 8px rgba(0, 191, 165, 0.5);
+}
+
+/* ==================== Comparison Slider ==================== */
+.comparison-slider {
+  cursor: ew-resize;
+}
+
+#slider-handle {
+  transition: background 0.15s;
+}
+
+#slider-handle:active {
+  background: #00bfa5;
+}
+
+/* ==================== Autho r Names ==================== */
+.author-name {
+  transition: all var(--transition-base);
+  cursor: default;
+}
+
+.author-name:hover {
+  color: #e5e7eb;
+}
+
+/* ==================== Prose / Abstract ==================== */
+.prose-custom p {
+  line-height: 1.8;
+  color: #d1d5db;
+}
+
+/* ==================== Video Modal ==================== */
+#video-modal.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ==================== BibTeX ==================== */
+#bibtex-code {
+  transition: all var(--transition-base);
+}
+
+/* ==================== Theme Toggle ==================== */
+#theme-toggle i {
+  transition: transform var(--transition-base);
+}
+
+#theme-toggle:hover i {
+  transform: rotate(30deg);
+}
+
+/* ==================== Footer ==================== */
+footer {
+  background: transparent;
+}
+
+/* ==================== Responsive ==================== */
+@media (max-width: 640px) {
+  .glass-btn {
+    padding: 0.6rem 1.1rem;
+    font-size: 0.85rem;
+  }
+
+  .glass-card {
+    border-radius: 0.75rem;
+  }
+
+  .glass-card.p-8 {
+    padding: 1.25rem;
+  }
+
+  .glass-card.p-10 {
+    padding: 1.25rem;
+  }
+
+  #bibtex-code {
+    padding: 1rem;
+    font-size: 0.7rem;
+  }
+
+  .carousel-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 0.75rem;
+  }
+}
+
+/* ==================== Performance: Reduce motion ==================== */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .animate-float,
+  .animate-float-delayed,
+  .animate-float-slow {
+    animation: none;
+  }
+}
